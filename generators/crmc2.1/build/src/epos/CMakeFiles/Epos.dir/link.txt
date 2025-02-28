@@ -1,0 +1,1 @@
+/usr/bin/gfortran -fPIC   -shared -Wl,-soname,libEpos.so -o libEpos.so CMakeFiles/Epos.dir/__/crmc-aaa.f.o CMakeFiles/Epos.dir/__/models.F.o CMakeFiles/Epos.dir/__/crmc-rndm.f.o  -Wl,-rpath,/home/shlee/workspace/rhicf/generators/crmc2.1/install/lib libCrmcBasic.so 

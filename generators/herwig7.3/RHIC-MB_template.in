@@ -1,0 +1,43 @@
+# -*- ThePEG-repository -*-
+
+read snippets/PPCollider.in
+
+##################################################
+# Technical parameters for this run
+##################################################
+cd /Herwig/Generators
+##################################################
+# RHIC physics parameters (override defaults here) 
+##################################################
+set EventGenerator:EventHandler:LuminosityFunction:Energy 510.0
+
+# Minimum Bias
+read snippets/MB.in
+
+#Diffraction model
+read snippets/Diffraction.in
+
+#################################################
+# HwRHICfHnalder for RHICf Analysis 
+##################################################
+
+cd /Herwig/Generators
+library HwRHICfHandler.so
+create Herwig::HwRHICfHandler /Herwig/Analysis/HwRHICfHandler
+insert /Herwig/Generators/EventGenerator:AnalysisHandlers 0 /Herwig/Analysis/HwRHICfHandler
+
+# RHICf Run type (you can type only TL=0, TS=1, TOP=2)
+set /Herwig/Analysis/HwRHICfHandler:RHICfRunType 1
+
+# Output ROOT file path
+set /Herwig/Analysis/HwRHICfHandler:OutputPath /home/shlee/workspace/herwig7.3/data
+
+# Is RHICf Neutron Event saved?
+set /Herwig/Analysis/HwRHICfHandler:SaveOption off 
+
+##################################################
+# Save run for later usage with 'Herwig run'
+##################################################
+cd /Herwig/Generators
+saverun RHIC-MB EventGenerator
+

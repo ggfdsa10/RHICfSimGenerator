@@ -1,0 +1,26 @@
+IF (HepMC3_FOUND) 
+  INCLUDE_DIRECTORIES ("${HEPMC3_INCLUDE_DIR}")
+  ADD_EXECUTABLE(analysis src/analysis.cc)
+  TARGET_LINK_LIBRARIES (analysis ${HEPMC3_LIBRARIES})
+  TARGET_LINK_LIBRARIES (analysis ${Boost_LIBRARIES})
+
+  ADD_TEST(test.hepmc3 ${PROJECT_BINARY_DIR}/crmc -o hepmc3
+    -c ${PROJECT_BINARY_DIR}/crmc.param -f test.hepmc3)
+  ADD_TEST(hepmc3_analysis analysis test.hepmc3)
+  SET_PROPERTY(TEST hepmc3_analysis APPEND PROPERTY DEPENDS test.hepmc)
+ENDIF (HepMC3_FOUND)
+
+IF (Root_FOUND) 
+  INCLUDE_DIRECTORIES ("${ROOT_INCLUDE_DIR}")
+  ADD_EXECUTABLE(analysisROOT src/analysisROOT.cc)
+  TARGET_LINK_LIBRARIES (analysisROOT ${HEPMC3_LIBRARIES})
+
+  ADD_TEST(test.root ${PROJECT_BINARY_DIR}/crmc -o root
+    -c ${PROJECT_BINARY_DIR}/crmc.param -f test.root)
+  ADD_TEST(root_analysis analysis test.hepmc3)
+  SET_PROPERTY(TEST root_analysis APPEND PROPERTY DEPENDS test.root)
+ENDIF(Root_FOUND)
+
+
+  
+  
